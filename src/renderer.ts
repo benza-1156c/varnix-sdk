@@ -8,7 +8,20 @@ export async function renderComponent(
   tenantDomain: string,
   apiConfig?: ApiConfig,
 ) {
-  const dataUrl = `data:text/javascript;base64,${Buffer.from(compiledUserCode).toString("base64")}`;
+  let base64Code = "";
+
+  if (typeof Buffer !== "undefined") {
+    base64Code = Buffer.from(compiledUserCode).toString("base64");
+  } else {
+    const bytes = new TextEncoder().encode(compiledUserCode);
+    let binary = "";
+    for (const byte of bytes) {
+      binary += String.fromCharCode(byte);
+    }
+    base64Code = btoa(binary);
+  }
+
+  const dataUrl = `data:text/javascript;base64,${base64Code}`;
   const UserModule = await import(dataUrl);
 
   const UserComponent = { ...UserModule.default };
