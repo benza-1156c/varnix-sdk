@@ -10,7 +10,11 @@ export type UnwrapEdges<T> = T extends null | undefined ? T : T extends {
 } : T;
 export declare const isObjectRecord: (value: unknown) => value is Record<string, unknown>;
 export declare function unwrapEdges<T>(obj: T): UnwrapEdges<T>;
-export declare const createApi: (tenantDomain: string, tagsCollector: Set<string>) => {
+export interface ApiConfig {
+    protocol?: string;
+    apiDomain?: string;
+}
+export declare const createApi: (tenantDomain: string, tagsCollector: Set<string>, config?: ApiConfig) => {
     get: <T>(path: string, options?: RequestInit) => Promise<T>;
     post: <T>(path: string, body?: any, options?: RequestInit) => Promise<T>;
     gql: <TResult, TVariables extends object = {}>(document: TypedDocumentNode<TResult, TVariables> | string, variables?: TVariables) => Promise<UnwrapEdges<TResult>>;

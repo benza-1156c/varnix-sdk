@@ -9075,49 +9075,49 @@ async function Zp(e) {
 		return null;
 	}
 }
-var Qp = (e, t) => {
-	let n = `${process.env.PROTOCOL || "https"}://${e}.${process.env.API || "api.example.com"}`, r = async (e, r = {}) => {
-		let i = await fetch(`${n}${e}`, {
-			...r,
+var Qp = (e, t, n = {}) => {
+	let r = `${n.protocol || "https"}://${e}.${n.apiDomain || "api.example.com"}`, i = async (e, n = {}) => {
+		let i = await fetch(`${r}${e}`, {
+			...n,
 			headers: {
 				"Content-Type": "application/json",
-				...r.headers
+				...n.headers
 			}
 		}), a = i.headers.get("X-LiteSpeed-Tag");
 		return a && a.split(",").forEach((e) => {
 			let n = e.trim();
 			n && t.add(n);
 		}), i;
-	}, i = {
+	}, a = {
 		get: async (e, t) => {
-			let n = await r(e, {
+			let n = await i(e, {
 				method: "GET",
 				...t
-			}), i = await n.json();
+			}), r = await n.json();
 			if (!n.ok) throw {
-				response: { data: i },
+				response: { data: r },
 				status: n.status
 			};
-			return i;
+			return r;
 		},
 		post: async (e, t, n) => {
-			let i = await r(e, {
+			let r = await i(e, {
 				method: "POST",
 				body: JSON.stringify(t),
 				...n
-			}), a = await i.json();
-			if (!i.ok) throw {
+			}), a = await r.json();
+			if (!r.ok) throw {
 				response: { data: a },
-				status: i.status
+				status: r.status
 			};
 			return a;
 		},
 		gql: async (e, t) => {
-			let n = typeof e == "string" ? e : Ji(e), r = await Zp(n), a = {
+			let n = typeof e == "string" ? e : Ji(e), r = await Zp(n), i = {
 				query: n,
 				variables: t
 			};
-			r && (a = {
+			r && (i = {
 				variables: t,
 				extensions: { persistedQuery: {
 					version: 1,
@@ -9125,25 +9125,25 @@ var Qp = (e, t) => {
 				} }
 			});
 			try {
-				let e = await i.post("/graphql", a);
-				if (e.errors?.some((e) => e.message === "PersistedQueryNotFound") && (a.query = n, e = await i.post("/graphql", a)), e.errors?.length) throw Error(e.errors[0]?.message);
+				let e = await a.post("/graphql", i);
+				if (e.errors?.some((e) => e.message === "PersistedQueryNotFound") && (i.query = n, e = await a.post("/graphql", i)), e.errors?.length) throw Error(e.errors[0]?.message);
 				return $(e.data);
 			} catch (e) {
 				throw Error(e.message || "GraphQL API Error");
 			}
 		}
 	};
-	return i;
+	return a;
 };
 //#endregion
 //#region src/renderer.ts
-async function $p(e, t) {
-	let n = o({ ...(await import(`data:text/javascript;base64,${Buffer.from(e).toString("base64")}`)).default });
-	Yp(n);
-	let r = /* @__PURE__ */ new Set(), i = Qp(t, r);
-	return n.provide("api", i), n.config.globalProperties.$api = i, {
-		html: await Yi(n),
-		tags: Array.from(r).join(",")
+async function $p(e, t, n) {
+	let r = o({ ...(await import(`data:text/javascript;base64,${Buffer.from(e).toString("base64")}`)).default });
+	Yp(r);
+	let i = /* @__PURE__ */ new Set(), a = Qp(t, i, n);
+	return r.provide("api", a), r.config.globalProperties.$api = a, {
+		html: await Yi(r),
+		tags: Array.from(i).join(",")
 	};
 }
 //#endregion

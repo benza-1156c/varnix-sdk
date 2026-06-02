@@ -1,11 +1,12 @@
 import { createSSRApp } from "vue";
 import { renderToString } from "@vue/server-renderer";
-import { createApi } from "./api";
+import { createApi, type ApiConfig } from "./api";
 import { registerComponents } from "./components/generated";
 
 export async function renderComponent(
   compiledUserCode: string,
   tenantDomain: string,
+  apiConfig?: ApiConfig,
 ) {
   const dataUrl = `data:text/javascript;base64,${Buffer.from(compiledUserCode).toString("base64")}`;
   const UserModule = await import(dataUrl);
@@ -17,7 +18,7 @@ export async function renderComponent(
   registerComponents(app);
 
   const collectedTags = new Set<string>();
-  const $api = createApi(tenantDomain, collectedTags);
+  const $api = createApi(tenantDomain, collectedTags, apiConfig);
   app.provide("api", $api);
   app.config.globalProperties.$api = $api;
 

@@ -2,7 +2,7 @@
 export { registerComponents } from "./components/generated";
 
 // Export API and renderer utilities
-export { createApi } from "./api";
+export { createApi, type ApiConfig } from "./api";
 export { renderComponent } from "./renderer";
 
 // Export type for Vue app

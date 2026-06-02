@@ -51,9 +51,18 @@ async function generateSHA256(message: string): Promise<string | null> {
   }
 }
 
-export const createApi = (tenantDomain: string, tagsCollector: Set<string>) => {
-  const protocol = process.env.PROTOCOL || "https";
-  const apiDomain = process.env.API || "api.example.com";
+export interface ApiConfig {
+  protocol?: string;
+  apiDomain?: string;
+}
+
+export const createApi = (
+  tenantDomain: string,
+  tagsCollector: Set<string>,
+  config: ApiConfig = {},
+) => {
+  const protocol = config.protocol || "https";
+  const apiDomain = config.apiDomain || "api.example.com";
   const baseURL = `${protocol}://${tenantDomain}.${apiDomain}`;
 
   const baseFetchRaw = async (path: string, options: RequestInit = {}) => {
