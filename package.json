@@ -1,8 +1,21 @@
 {
   "name": "varnix-sdk",
-  "module": "index.ts",
+  "version": "0.1.0",
+  "description": "Vue 3 UI component library with Sonner toasts and form validation",
   "type": "module",
-  "private": true,
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build",
     "generate-components": "bun scripts/generate-components.ts"

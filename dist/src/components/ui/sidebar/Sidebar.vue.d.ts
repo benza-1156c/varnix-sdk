@@ -1,0 +1,22 @@
+import { SidebarProps } from '.';
+declare var __VLS_1: {}, __VLS_36: {}, __VLS_38: {};
+type __VLS_Slots = {} & {
+    default?: (props: typeof __VLS_1) => any;
+} & {
+    default?: (props: typeof __VLS_36) => any;
+} & {
+    default?: (props: typeof __VLS_38) => any;
+};
+declare const __VLS_base: import('vue').DefineComponent<SidebarProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<SidebarProps> & Readonly<{}>, {
+    collapsible: "offcanvas" | "icon" | "none";
+    variant: "sidebar" | "floating" | "inset";
+    side: "left" | "right";
+}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
+declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
+declare const _default: typeof __VLS_export;
+export default _default;
+type __VLS_WithSlots<T, S> = T & {
+    new (): {
+        $slots: S;
+    };
+};
